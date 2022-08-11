@@ -1,0 +1,53 @@
+﻿<Window x:Class="ListControlDemo.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListControlDemo"
+        mc:Ignorable="d"
+        Title="Элементы управления списком" 
+        Height="360" 
+        Width="340"
+        Background="Honeydew" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        FontFamily="Cambria" FontSize="16">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- кнопочное меню -->
+        <Button x:Name="btnListBox" Grid.Row="0" 
+                Foreground="DarkBlue"
+                Margin="15 20" MinHeight="30" 
+                Background="LightBlue" 
+                Click="btnListBox_Click" >
+            <TextBlock TextAlignment="Center">
+                Переход на демонстрацию<LineBreak/>ListBox
+            </TextBlock>
+        </Button>
+        <Button x:Name="btnComboBox" Grid.Row="1" 
+                Foreground="DarkBlue"
+                Margin="15 20" MinHeight="30"
+                Background="LightBlue" Click="btnComboBox_Click" >
+            <TextBlock TextAlignment="Center">
+                Переход на демонстрацию<LineBreak />ComboBox
+            </TextBlock>
+        </Button>
+        <Button x:Name="btnListView"  Grid.Row="2"
+                Foreground="DarkBlue"
+                Margin="15 20" MinHeight="30" 
+                Background="LightBlue" Click="btnListView_Click">
+            <TextBlock TextAlignment="Center">
+                Переход на демонстрацию<LineBreak />ListView
+            </TextBlock>
+        </Button>
+        <Button x:Name="btnExit"  Grid.Row="3"   
+                Foreground="DarkBlue"
+                Content="Выход"
+                Margin="15 20" MinHeight="30"
+                Background="LightBlue" Click="btnExit_Click"/>
+    </Grid>
+</Window>

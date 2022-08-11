@@ -1,0 +1,146 @@
+﻿<Window x:Class="ListControlDemo.Views.WinListBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListControlDemo"
+
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:models="clr-namespace:ListControlDemo.Models"
+
+        mc:Ignorable="d"
+        Title="Демонстрация ListBox" Height="600" Width="900" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- 
+        ListBox заполняем в разметке, Заполнители - элементы разметик,
+        данными разных типв из пространства имен sys:
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        -->
+        <ListBox Name ="LbTest" Margin = "15 10 10 10" 
+                 FontSize="14" FontWeight="Bold" 
+                 Grid.Row="0" Grid.Column="0">
+            <TextBlock Foreground="Blue" TextAlignment="Center"
+                       Margin="0 5" Width="170">
+                Овощи и фрукты:
+            </TextBlock>
+            <CheckBox Name="ChbTest">Проверка</CheckBox>
+            <sys:Int32>42</sys:Int32>
+            <sys:Double>42.42</sys:Double>
+            <sys:String>Картошка</sys:String>
+            <sys:String>Помидоры</sys:String>
+            <sys:String>Дыни</sys:String>
+            <sys:String>Арбузы</sys:String>
+            <sys:String>Груши</sys:String>
+            <sys:String>Виноград</sys:String>
+        </ListBox>
+        
+        <!-- программно заполняемый ListBox 
+        режимы выбора элементов
+        SelectionMode="Single"    - включен по умолчанию, выбор только одного элемента
+        SelectionMode="Multiple"  - каждый элемент, по которому щелкнули становится выбранным 
+        SelectionMode="Extended"  - для выбора элементов удерживать Ctrl или Shift при щелчке
+                                    Ctrl  - выбор не соседних элементов, 
+                                    Shift - выбор соседних элементов
+        -->
+        <ListBox Name="LbProgrFill" Margin = "15 10 10 10" FontSize="14" 
+                 Foreground="DarkGreen" 
+                 SelectionMode="Multiple"
+                 SelectionChanged="lbProgrFill_Selected"
+                 Grid.Row="0" Grid.Column="1" />
+        
+        <!-- 
+           ListBox c заполнением объектами класса Phone, отображаемое в списке
+           свойство класса определяется свойством DisplayMemberPath
+           !! чтобы пользоваться классом, объявленным в проекте - пересобрать 
+           !! проект
+        
+           используем обработчик события выбора элемента общий с lbProgrFillObj
+           т.к. хранят объекты одинакового типа
+        -->
+        <ListBox Name="LbPhones"  
+                 Grid.Row="1" Grid.Column="0"
+                 DisplayMemberPath="Title"
+                 Margin = "15 10 10 10" 
+                 FontSize="14" 
+                 Foreground="DarkBlue" Background="AliceBlue" 
+                 SelectionChanged="lbPhones_SelectionChanged">
+            <!-- !!! выполнить сборку перед использованием класса Phone !!! -->
+            <models:Phone Title="Galaxy S7"    Company="Samsung"   Price="15000"/>
+            <models:Phone Title="iPhone 7"     Company="Apple"     Price="25000"/>
+            <models:Phone Title="Lumia P12"    Company="Microsoft" Price="10000"/>
+            <models:Phone Title="Meizu Mi5"    Company="Meizu"     Price="5000"/>
+            <models:Phone Title="Galaxy J7"    Company="Samsung"   Price="12000"/>
+            <models:Phone Title="OneTouch 123" Company="Alcatel"   Price="3000"/>
+            <models:Phone Title="J7 2017"      Company="Samsung"   Price="9000"/>
+            <models:Phone Title="A7 2019"      Company="Samsung"   Price="32000"/>
+        </ListBox>
+        
+        <!-- 
+            Заполнение ListBox программно, привязкой к коллекции объектов
+        -->
+        <ListBox Name="LbProgrFillObj" Grid.Row="1" Grid.Column="1"  Margin = "15 10 10 10" 
+            FontSize="14" Foreground="DarkBlue" Background="AntiqueWhite" 
+            SelectionMode="Extended"
+            SelectionChanged="lbPhones_SelectionChanged" />
+        
+        <!-- 
+            Еще один ListBox со сложным дизайном элементов 
+            ListBoxItem - позволяет задавать дополнительные элементы разметки
+            
+            Для плавной, пиксельной прокрутки, используем присоединенное
+            свойство VirtualizingStackPanel. Более подробно об оптимизации - в разделе виртуализация в WPF
+            VirtualizingStackPanel.ScrollUnit="Pixel"
+        -->
+        <ListBox Name="lbAirliners" Background="LightCyan" Margin="20,0,0,20"
+                 Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+
+                 VirtualizingStackPanel.ScrollUnit="Pixel"
+                 
+                 SelectionChanged="lbAirliners_SelectionChanged"
+                 FontFamily="Verdana" FontSize="12" FontWeight="Bold">
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <!-- папка с картинками должна быть включена в проект -->
+                    <Image Source="../Images/liners1.jpg" Stretch="UniformToFill" Width="300"/>
+                    <TextBlock Margin="10" VerticalAlignment="Center" Text="Самолет 1"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/liners2.jpg" Stretch="UniformToFill" Width="300"/>
+                    <TextBlock Margin="10" VerticalAlignment="Center">Самолет 2</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/liners3.jpg" Stretch="UniformToFill" Width="300"/>
+                    <TextBlock Margin="10"  VerticalAlignment="Center">Самолет 3</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/liners4.jpg" Stretch="UniformToFill" Width="300"/>
+                    <TextBlock Margin="10" VerticalAlignment="Center" Text="Самолет 4" /> 
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/liners5.jpg" Stretch="UniformToFill" Width="300"/>
+                    <TextBlock Margin="10" VerticalAlignment="Center">Самолет 5</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+
+        </ListBox>
+    </Grid>
+</Window>
